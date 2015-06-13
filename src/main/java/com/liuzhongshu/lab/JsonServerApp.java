@@ -1,9 +1,8 @@
 package com.liuzhongshu.lab;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import io.dropwizard.Application;
 import io.dropwizard.Configuration;
+import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
@@ -20,7 +19,7 @@ public class JsonServerApp extends Application<Configuration> {
 
     @Override
     public void initialize(Bootstrap<Configuration> bootstrap) {
-         
+    	bootstrap.addBundle(new AssetsBundle("/assets/", "/"));  
     }
 
     @Override
