@@ -39,63 +39,61 @@
             return { params: params };
         });
 
-        var admin = nga.application('json server admin') // application main title
-            .baseApiUrl('http://localhost:8080/'); // main API endpoint
+        var admin = nga.application('json server admin') 
+            .baseApiUrl('http://localhost:8080/api/'); 
 
-        // define all entities at the top to allow references between them
-        var blog = nga.entity('blogs')
-        	.baseApiUrl('http://localhost:8080/api/') // The base API endpoint can be customized by entity
+        var blog = nga.entity('blogs');
+        	
 
         // set the application entities
-        admin
-            .addEntity(blog);
+        admin.addEntity(blog);
 
 
-        blog.dashboardView() // customize the dashboard panel for this entity
+        blog.dashboardView() 
             .title('Recent blogs')
-            .order(1) // display the blog panel first in the dashboard
-            .perPage(5) // limit the panel to the 5 latest blog
+            .order(1) 
+            .perPage(5) 
             .fields([
             	nga.field('published_at', 'date'),
-            	nga.field('name').isDetailLink(true)]); // fields() called with arguments add fields to the view
+            	nga.field('name').isDetailLink(true)]); 
 
         blog.listView()
-            .title('All blogs') // default title is "[Entity_name] list"
-            .description('List of blogs with pagination') // description appears under the title
+            .title('All blogs') 
+            .description('List of blogs with pagination') 
             .infinitePagination(true) // load pages as the user scrolls
             .fields([
-                nga.field('id').label('ID'), // The default displayed name is the camelCase field name. label() overrides id
-                nga.field('name'), // the default list field type is "string", and displays as a string
-                nga.field('published_at', 'date'), // Date field type allows date formatting
+                nga.field('id').label('ID'), 
+                nga.field('name'), 
+                nga.field('published_at', 'date'), 
                 nga.field('views', 'number')
             ])
             .listActions(['show', 'edit', 'delete']);
 
         blog.creationView()
             .fields([
-                nga.field('name') // the default edit field type is "string", and displays as a text input
-                    .attributes({ placeholder: 'the blog title' }) // you can add custom attributes, too
-                    .validation({ required: true, minlength: 1, maxlength: 100 }), // add validation rules for fields
-                nga.field('body', 'wysiwyg'), // overriding the type allows rich text editing for the body
-                nga.field('published_at', 'date') // Date field type translates to a datepicker
+                nga.field('name') 
+                    .attributes({ placeholder: 'the blog title' }) 
+                    .validation({ required: true, minlength: 1, maxlength: 100 }), 
+                nga.field('body', 'wysiwyg'), 
+                nga.field('published_at', 'date') 
             ]);
 
         blog.editionView()
-            .title('Edit blog "{{ entry.values.name }}"') // title() accepts a template string, which has access to the entry
-            .actions(['list', 'show', 'delete']) // choose which buttons appear in the top action bar. Show is disabled by default
+            .title('Edit blog "{{ entry.values.name }}"') 
+            .actions(['list', 'show', 'delete']) 
             .fields([
-                blog.creationView().fields(), // fields() without arguments returns the list of fields. That way you can reuse fields from another view to avoid repetition
-                nga.field('views', 'number').cssClasses('col-sm-4')
+                blog.creationView().fields(), 
+                nga.field('views', 'number')
             ]);
 
-        blog.showView() // a showView displays one entry in full page - allows to display more data than in a a list
+        blog.showView() 
             .fields([
                 nga.field('id'),
                 blog.editionView().fields()
             ]);
 
         admin.menu(nga.menu()
-            .addChild(nga.menu(blog).title("blogs").icon('<span class="glyphicon glyphicon-file"></span>')) // customize the entity menu icon
+            .addChild(nga.menu(blog).title("blogs").icon('<span class="glyphicon glyphicon-file"></span>')) 
             .addChild(nga.menu().title('Other')
                 .addChild(nga.menu().title('Stats').icon('').link('/stats'))
             )

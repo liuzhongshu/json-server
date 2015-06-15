@@ -4,14 +4,17 @@ A quick java based back-end REST server for prototyping and mocking inspired by 
 ## Build & run
 ```
 mvn package 
-java -jar target/json-server-0.0.1-snapshot.jar server
+java -jar target/json-server-0.0.1-snapshot.jar server server.yml
 ```
 
-then use browser to access http://localhost:8080/blogs
+then use browser to access http://localhost:8080/api/blogs
+
+## client
+if your want a CRUD client based on angular ng-admin, run bower install, then access http://localhost:8080/ 
 
 ## Routes
 
-Based on the  `db.json` file, here are all the available routes. 
+Based on the  `db.json` file, here are all the available routes(root path is /api): 
 
 ```
 GET    /blogs
