@@ -13,6 +13,7 @@ import java.util.Map;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class DbManager implements Managed {
 
@@ -21,6 +22,7 @@ public class DbManager implements Managed {
 	
 	public DbManager() throws Exception {
 		objectMapper = new ObjectMapper();
+		objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
 		memDb = objectMapper.readValue(new File("db.json"), HashMap.class);
 	}
 	
@@ -40,6 +42,14 @@ public class DbManager implements Managed {
 		return (List<Map>)entities;
 	}
 
+	public boolean isModel (String model) {
+		Object entities = memDb.get(model);
+		if(entities instanceof List)
+			return true;
+		else
+			return false;
+	}
+	
 	public Map<String,Object> getById(String model, long id) throws Exception {
 		Object entities = memDb.get(model);
 		if(!(entities instanceof List))
@@ -67,7 +77,6 @@ public class DbManager implements Managed {
 			Map entity = iter.next();
 			if (entity.get("id") != null && id == Long.parseLong(entity.get("id").toString())) {
 				iter.remove();
-				save();
 				return;
 			}
 		}
@@ -87,7 +96,6 @@ public class DbManager implements Managed {
 		}
 		
 		((List)entities).add(entity);
-		save();
 	}
 
 	public void update(String model, Map<String, Object> entity) throws Exception {
@@ -108,10 +116,19 @@ public class DbManager implements Managed {
 			if (entity.get("id") != null && id == Long.parseLong(item.get("id").toString())) {
 				iter.remove();
 				((List) entities).add(entity);
-				save();
 				return;
 			}
 		}		
 		throw new Exception("entity not found");
 	}
+	
+	
+	public List<Map> getMockResource(String path, String method) {
+		Object resource = memDb.get(path + "@" + method);
+		if (resource != null && resource instanceof List)
+			return (List<Map>)memDb.get(path + "@" + method);
+		else
+			return null;
+	}
+	
 }

@@ -9,7 +9,7 @@ import io.dropwizard.setup.Environment;
 
 public class JsonServerApp extends Application<Configuration> {
     public static void main(String[] args) throws Exception {
-        new JsonServerApp().run(args);
+        new JsonServerApp().run("server","server.yml");
     }
 
     @Override
@@ -29,7 +29,8 @@ public class JsonServerApp extends Application<Configuration> {
     	DbManager dbManager = new DbManager();
         environment.lifecycle().manage(dbManager);
         
-    	environment.jersey().register(new RestResource(dbManager));
+    	environment.jersey().register(new MockResource(dbManager));
+    	
     }
 
 }
