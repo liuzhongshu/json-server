@@ -1,25 +1,41 @@
 {
-  "comments":[
-   {"id":1,"name":"comment1"},
-   {"id":2,"name":"comment2"}
-  ],
-  "blogs":[
-   {"id":1,"name":"blog1","body":"<p>blog1 content<br></p>","published_at":"2015-06-01","views":7},
-   {"id":2,"name":"blog2","body":"<p>blog2 content..<br></p>","views":3}
-  ],
-  "auth/login@POST":[
-    {
-      "request":{"username":"aaa"},
-      "response":{"token":"aaaaa"}
+  "auth/login@POST" : [ {
+    "request" : {
+      "username" : "aaa"
     },
-    {
-      "request":{"username":"bbb"},
-      "response":{"!exception":"user not found"}
-    },
-    {
-      "response":{"token":"ccccc"}
+    "response" : {
+      "token" : "aaaa"
     }
-    
-  ],
-  "db/save@POST":[{"response":{}}]  
+  }, {
+    "request" : {
+      "username" : "bbb"
+    },
+    "response" : {
+      "!exception" : "user not found"
+    }
+  }, {
+    "response" : {
+      "token" : "ccccc"
+    }
+  } ],
+  "db/save@POST" : [ {
+    "response" : { }
+  } ],
+  "comments" : [ {
+    "id" : 1,
+    "name" : "comment1"
+  }, {
+    "id" : 2,
+    "name" : "comment2"
+  } ],
+  "blogs" : [ {
+    "id" : 2,
+    "name" : "blog2",
+    "body" : "<p>blog2 content..nnnnnnn<br></p>",
+    "views" : 3
+  }, {
+    "id" : 3,
+    "body" : "<p>bbbbccc</p>",
+    "name" : "aaa"
+  } ]
 }

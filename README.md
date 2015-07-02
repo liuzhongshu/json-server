@@ -3,7 +3,7 @@ A quick java based back-end REST server for prototyping and mocking
 
 ## Build & run
 ```
-mvn exec:java
+mvn compile exec:java
 ```
 
 then use browser to access http://localhost:8080/api/blogs
@@ -23,7 +23,7 @@ Based on the  `db.json` file:
   ]
 ```  
 
-these are two models: comments and blogs, the code will generate all routes(root path is /api) for these models: 
+these are two models: comments and blogs, the code will generate all routes(root path is /api defined in server.yml) for these models: 
 
 ```
 GET    /api/blogs
@@ -52,8 +52,14 @@ In db.json file, every mock api is just a json object, you can write request and
   "db/save@POST":[{"response":{}}]  
 ```
 
-here, we define two api, one is POST request to /api/auth/login, another is POST request to /api/db/save, if the request contain the username 'aaa', the response will be a token, and the response will be a 500 error if username is 'bbb'   
+here, we define two api, one is POST request to /api/auth/login, another is POST request to /api/db/save, if the request contain the username 'aaa', the response will be a token, and the response will be a 500 error if username is 'bbb'. 
+
+## hot mocking
+if your modify the model mocking or api mocking, no need to restart the server, just refresh browser, it's amazing simple.
  
 ## client
-if your want a CRUD client based on angular ng-admin, run bower install, then access http://localhost:8080/ 
+if your want use your client code, just put the code in webapp, and refresh browser.
+
+## ng-admin client
+if your just want a CRUD client based on angular ng-admin, run bower install, then access http://localhost:8080/ 
 
